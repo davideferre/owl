@@ -123,7 +123,7 @@ Owl components in an application are used to define a (dynamic) tree of componen
      C   D
 ```
 
-**Environment** The root component is special: it is created with an environment,
+**Environment:** the root component is special: it is created with an environment,
 which should contain a `QWeb` instance.  The environment is then automatically
 propagated to each sub components (and accessible in the `this.env` property).
 
@@ -140,7 +140,7 @@ information or generic services (such as doing rpcs, or accessing local storage)
 Doing it this way means that components are easily testable: we can simply
 create a test environment with mock services.
 
-**State** Each component can manage its own local state. It is a simple ES6
+**State:** each component can manage its own local state. It is a simple ES6
 class, there are no special rules:
 
 ```js
@@ -181,6 +181,76 @@ class Counter extends Component {
   }
 }
 ```
+
+**Props:** sub components often needs some information from their parents. This
+is done by adding the required information to the template. This will then be
+accessible by the sub component in the `props` object.  Note that there is an
+important rule here: the information contained in the `props` object is not
+owned by the sub component, and should never be modified.
+
+```js
+class Child extends Component {
+  static template = xml`<div>Hello <t t-esc="props.name"/></div>`;
+}
+
+class Parent extends Component {
+  static template = xml`
+    <div>
+        <Child name="'Owl'" />
+        <Child name="'Framework'" />
+    </div>`;
+  static components = { Child };
+}
+```
+
+**Communication:** there are multiple ways to communicate information between
+components.  However, the two most important ways are the following:
+
+- from parent to children: by using `props`,
+- from a children to one of its parent: by triggering events.
+
+The following example illustrate both mechanisms:
+
+```js
+
+class OrderLine extends Component {
+  static template = xml`
+    <div t-on-click="add">
+        <div><t t-esc="props.line.name"/></div>
+        <div>Quantity: <t t-esc="props.line.quantity"/></div>
+    </div>`;
+
+  add() {
+      this.trigger("add-to-order", {line: props.line})
+  }
+}
+
+class Parent extends Component {
+  static template = xml`
+    <div t-on-add-to-order="addToOrder">
+        <OrderLine
+            t-foreach="orders"
+            t-as="line"
+            line="line" />
+    </div>`;
+  static components = { OrderLine };
+  orders = useState([
+      {id: 1, name: "Coffee", quantity: 0},
+      {id: 2, name: "Thee", quantity: 0},
+  ]);
+
+  addToOrder(event) {
+      const line = event.detail.line;
+      line.quantity++;
+  }
+}
+```
+
+In this example, the `OrderLine` component trigger a `add-to-order` event. This
+will generate a DOM event which will bubble along the DOM tree. It will then be
+intercepted by the parent component, which will then get the line (from the
+`detail` key) and then increment it.
+
 
 ## License
 

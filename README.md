@@ -55,7 +55,10 @@ app.mount(document.body);
 ```
 
 Note that the counter component is made reactive with the [`useState`](doc/hooks.md#usestate)
-hook. More interesting examples can be found on the
+hook. Also, all examples here uses the `xml` helper to define inline templates.
+But this is not mandatory, many applications will load templates separately.
+
+More interesting examples can be found on the
 [playground](https://odoo.github.io/owl/playground) application.
 
 ## Design Principles
@@ -137,7 +140,48 @@ information or generic services (such as doing rpcs, or accessing local storage)
 Doing it this way means that components are easily testable: we can simply
 create a test environment with mock services.
 
-**Props and State** Each com
+**State** Each component can manage its own local state. It is a simple ES6
+class, there are no special rules:
+
+```js
+class Counter extends Component {
+  static template = xml`
+    <button t-on-click="increment">
+      Click Me! [<t t-esc="state.value"/>]
+    </button>`;
+
+  state = {value: 0};
+
+  increment() {
+    this.state.value++;
+    this.render();
+  }
+}
+```
+
+The example above shows a component with a local state.  Note that since there
+is nothing magical to the `state` object, we need to manually call the `render`
+function whenever we update it. This can quickly become annoying (and not
+efficient if we do it too much). There is a better way: using the `useState`
+hook, which transforms an object into a reactive version of itself:
+
+```js
+const { useState } = owl.hooks;
+
+class Counter extends Component {
+  static template = xml`
+    <button t-on-click="increment">
+      Click Me! [<t t-esc="state.value"/>]
+    </button>`;
+
+  state = useState({value: 0});
+
+  increment() {
+    this.state.value++;
+  }
+}
+```
+
 ## License
 
 OWL is [LGPL licensed](./LICENSE).

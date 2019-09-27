@@ -4,12 +4,18 @@ _A no nonsense web framework for structured, dynamic and maintainable applicatio
 
 ## Project Overview
 
-The Odoo Web Library (OWL) is a smallish (~17kb gzipped) UI framework intended to be the basis for
-the [Odoo](https://www.odoo.com/) Web Client. OWL's main features are:
+The Odoo Web Library (OWL) is a smallish (~17kb gzipped) UI framework intended to
+be the basis for the [Odoo](https://www.odoo.com/) Web Client. Owl is a modern
+framework, written in Typescript, taking the best ideas from React and Vue in a
+simple and consistent way. Owl's main features are:
 
-- a _declarative component system_, (template based, with asynchronous rendering and a virtual dom)
-- a store implementation (for state management)
+- a _declarative component system_,
+- a reactivity system based on hooks,
+- a store implementation (for state management),
 - a small frontend router
+
+Owl components are defined with ES6 classes, they use QWeb templates, an underlying
+virtual dom, integrates beautifully with hooks, and the rendering is asynchronous.
 
 **Try it online!** An online playground is available at [https://odoo.github.io/owl/playground](https://odoo.github.io/owl/playground) to let you experiment with the OWL framework.
 
@@ -18,8 +24,8 @@ the [Odoo](https://www.odoo.com/) Web Client. OWL's main features are:
 Here is a short example to illustrate interactive components:
 
 ```javascript
-import { Component, QWeb, useState } from 'owl'
-import { xml } from 'owl/tags'
+import { Component, QWeb, useState } from "owl";
+import { xml } from "owl/tags";
 
 class Counter extends Component {
   static template = xml`
@@ -48,12 +54,11 @@ const app = new App({ qweb: new QWeb() });
 app.mount(document.body);
 ```
 
-Note that the counter component is made reactive with the [`useState` hook](doc/hooks.md#usestate).
-
-More interesting examples can be found on the
+Note that the counter component is made reactive with the [`useState`](doc/hooks.md#usestate)
+hook. More interesting examples can be found on the
 [playground](https://odoo.github.io/owl/playground) application.
 
-## OWL's Design Principles
+## Design Principles
 
 OWL is designed to be used in highly dynamic applications where changing
 requirements are common and code needs to be maintained by large teams.
@@ -82,7 +87,7 @@ The complete documentation can be found [here](doc/readme.md). The most importan
 
 - [Quick Start](doc/quick_start.md)
 - [Component](doc/component.md)
-- [QWeb](doc/qweb.md)
+- [Hooks](doc/hooks.md)
 
 Found an issue in the documentation? A broken link? Some outdated information?
 Submit a PR!
@@ -96,16 +101,43 @@ If you want to use a simple `<script>` tag, the last release can be downloaded h
 
 Some npm scripts are available:
 
-| Command               | Description                                                                  |
-| --------------------- | ---------------------------------------------------------------------------- |
-| `npm install`         | install every dependency required for this project                           |
-| `npm run build`       | build a bundle of _owl_ in the _/dist/_ folder                               |
-| `npm run minify`      | minify the prebuilt owl.js file                                              |
-| `npm run test`        | run all tests                                                                |
-| `npm run test:watch`  | run all tests, and keep a watcher                                            |
-| `npm run tools`       | build tools applications, start a static server (see [here](doc/tooling.md)) |
-| `npm run tools:watch` | same as `tools`, but with a watcher to rebuild owl                           |
+| Command          | Description                                        |
+| ---------------- | -------------------------------------------------- |
+| `npm install`    | install every dependency required for this project |
+| `npm run build`  | build a bundle of _owl_ in the _/dist/_ folder     |
+| `npm run minify` | minify the prebuilt owl.js file                    |
+| `npm run test`   | run all (owl) tests                                |
 
+## Quick Overview
+
+Owl components in an application are used to define a (dynamic) tree of components.
+
+```
+        Root
+        /   \
+       A     B
+      / \
+     C   D
+```
+
+**Environment** The root component is special: it is created with an environment,
+which should contain a `QWeb` instance.  The environment is then automatically
+propagated to each sub components (and accessible in the `this.env` property).
+
+```js
+const env = { qweb: new QWeb() };
+const app = new App(env);
+app.mount(document.body);
+```
+
+The environment is mostly static. Each application is free to add anything to
+the environment, which is very useful, since this can be accessed by each sub
+component.  Some good use case for that is some configuration keys, session
+information or generic services (such as doing rpcs, or accessing local storage).
+Doing it this way means that components are easily testable: we can simply
+create a test environment with mock services.
+
+**Props and State** Each com
 ## License
 
 OWL is [LGPL licensed](./LICENSE).

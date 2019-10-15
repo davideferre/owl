@@ -350,6 +350,7 @@ export class Component<T extends Env, Props extends {}> {
     await fiber.promise;
 
     if (__owl__.isMounted && fiber === __owl__.currentFiber) { // check is we can remove this
+    // if (__owl__.isMounted && !fiber.isCancelled) {
       // we only update the vnode and the actual DOM if no other rendering
       // occurred between now and when the render method was initially called.
       this.__applyPatchQueue(fiber);

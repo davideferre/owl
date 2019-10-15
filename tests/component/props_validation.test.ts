@@ -1,9 +1,8 @@
 import { Component, Env } from "../../src/component/component";
-import { makeTestFixture, makeTestEnv } from "../helpers";
+import { makeTestFixture, makeTestEnv, nextTick } from "../helpers";
 import { useState } from "../../src/hooks";
 import { QWeb } from "../../src/qweb";
 import { xml } from "../../src/tags";
-import { nextTick } from "../helpers";
 
 
 //------------------------------------------------------------------------------

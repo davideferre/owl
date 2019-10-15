@@ -421,7 +421,9 @@ export class Component<T extends Env, Props extends {}> {
       vnode: null,
       patchQueue: parent ? parent.patchQueue : [],
       props: this.props,
-      promise: null
+      promise: null,
+      // parent
+      // resolve
     };
     fiber.rootFiber = parent ? parent.rootFiber : fiber;
     this.__owl__.currentFiber = fiber;
@@ -517,6 +519,7 @@ export class Component<T extends Env, Props extends {}> {
       if (defaultProps) {
         nextProps = this.__applyDefaultProps(nextProps, defaultProps);
       }
+      // check fiber cancelled here as well
       await Promise.all([
         this.willUpdateProps(nextProps),
         this.__owl__.willUpdatePropsCB && this.__owl__.willUpdatePropsCB(nextProps)

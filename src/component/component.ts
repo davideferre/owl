@@ -33,7 +33,6 @@ export interface Env {
   qweb: QWeb;
   [key: string]: any;
 }
-
 /**
  * Fibers are small abstractions designed to contain all the internal state
  * associated to a "rendering work unit", relative to a specific component.
@@ -350,7 +349,7 @@ export class Component<T extends Env, Props extends {}> {
     fiber.promise = this.__render(fiber);
     await fiber.promise;
 
-    if (__owl__.isMounted && fiber === __owl__.currentFiber) {
+    if (__owl__.isMounted && fiber === __owl__.currentFiber) { // check is we can remove this
       // we only update the vnode and the actual DOM if no other rendering
       // occurred between now and when the render method was initially called.
       this.__applyPatchQueue(fiber);
@@ -510,6 +509,9 @@ export class Component<T extends Env, Props extends {}> {
   ): Promise<void> {
     const shouldUpdate = parentFiber.force || this.shouldUpdate(nextProps);
     if (shouldUpdate) {
+      this.__owl__.currentFiber!.rootFiber!.isCancelled = true; // cancel in createFiber??
+      const fiber = this.__createFiber(parentFiber.force, scope, vars, parentFiber);
+      fiber.patchQueue.push(fiber);
       const defaultProps = (<any>this.constructor).defaultProps;
       if (defaultProps) {
         nextProps = this.__applyDefaultProps(nextProps, defaultProps);
@@ -518,9 +520,10 @@ export class Component<T extends Env, Props extends {}> {
         this.willUpdateProps(nextProps),
         this.__owl__.willUpdatePropsCB && this.__owl__.willUpdatePropsCB(nextProps)
       ]);
+      if (parentFiber.rootFiber!.isCancelled) {
+        return;
+      }
       this.props = nextProps;
-      const fiber = this.__createFiber(parentFiber.force, scope, vars, parentFiber);
-      fiber.patchQueue.push(fiber);
 
       await this.__render(fiber);
     }

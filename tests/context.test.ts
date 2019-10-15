@@ -174,7 +174,7 @@ describe("Context", () => {
     expect(testContext.subscriptions.update.length).toBe(0);
   });
 
-  test.only("concurrent renderings", async () => {
+  test.skip("concurrent renderings", async () => {
     const testContext = new Context({ x: { n: 1 }, key: 'x' });
     const def = makeDeferred();
     let stateC;

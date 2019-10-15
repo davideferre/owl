@@ -2795,7 +2795,7 @@ describe("async rendering", () => {
     expect(fixture.innerHTML).toBe("<div><button>Click</button><div>Child</div></div>");
   });
 
-  test.skip("concurrent renderings scenario 1", async () => {
+  test("concurrent renderings scenario 1", async () => {
     const def = makeDeferred();
     let stateB;
 
@@ -2907,7 +2907,7 @@ describe("async rendering", () => {
     expect(ComponentB.prototype.__applyPatchQueue).toBeCalledTimes(0);
   });
 
-  test.skip("concurrent renderings scenario 3", async () => {
+  test("concurrent renderings scenario 3", async () => {
     const defB = makeDeferred();
     const defsD = [makeDeferred(), makeDeferred()];
     let index = 0;
@@ -2977,7 +2977,7 @@ describe("async rendering", () => {
     expect(ComponentD.prototype.someValue).toBeCalledTimes(2);
   });
 
-  test.skip("concurrent renderings scenario 4", async () => {
+  test("concurrent renderings scenario 4", async () => {
     const defB = makeDeferred();
     const defsD = [makeDeferred(), makeDeferred()];
     let index = 0;
@@ -3047,7 +3047,7 @@ describe("async rendering", () => {
     expect(ComponentD.prototype.someValue).toBeCalledTimes(2);
   });
 
-  test.skip("concurrent renderings scenario 5", async () => {
+  test("concurrent renderings scenario 5", async () => {
     const defsB = [makeDeferred(), makeDeferred()];
     let index = 0;
 
@@ -3092,7 +3092,7 @@ describe("async rendering", () => {
     expect(ComponentB.prototype.someValue).toBeCalledTimes(2);
   });
 
-  test.skip("concurrent renderings scenario 6", async () => {
+  test("concurrent renderings scenario 6", async () => {
     const defsB = [makeDeferred(), makeDeferred()];
     let index = 0;
 
@@ -3137,7 +3137,7 @@ describe("async rendering", () => {
     expect(ComponentB.prototype.someValue).toBeCalledTimes(2);
   });
 
-  test.only("concurrent renderings scenario 7", async () => {
+  test.skip("concurrent renderings scenario 7", async () => {
     class ComponentB extends Component<any, any> {
       static template = xml`<p><t t-esc="props.fromA" /><t t-esc="someValue()" /></p>`;
       state = useState({ fromB: "b" });

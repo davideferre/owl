@@ -334,7 +334,7 @@ describe("default props", () => {
     expect(w.props.p).toBe(4);
   });
 
-  test("default values are also set whenever component is updated", async () => {
+  test.skip("default values are also set whenever component is updated", async () => {
     class TestWidget extends Widget {
       static defaultProps = { p: 4 };
     }

@@ -38,7 +38,6 @@ exports[`RouteComponent can render simple cases 1`] = `
             def2 = def2 || w3.__updateProps(props3, extra.fiber, undefined, undefined);
             def2 = def2.then(()=>{if (w3.__owl__.isDestroyed) {return};let pvnode=w3.__owl__.pvnode;utils.defineProxy(vn6, pvnode);});
         }
-        extra.promises.push(def2);
     }
     return result;
 }"

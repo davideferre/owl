@@ -546,6 +546,10 @@ export class Component<T extends Env, Props extends {}> {
         nextProps = this.__applyDefaultProps(nextProps, defaultProps);
       }
       // check fiber cancelled here as well
+      let resolve;
+      fiber.promise = new Promise(function (r) {
+        resolve = r;
+      });
       await Promise.all([
         this.willUpdateProps(nextProps),
         this.__owl__.willUpdatePropsCB && this.__owl__.willUpdatePropsCB(nextProps)
@@ -555,7 +559,9 @@ export class Component<T extends Env, Props extends {}> {
       }
       this.props = nextProps;
 
-      await this.__render(fiber);
+      const vnode = await this.__render(fiber);
+      resolve(vnode);
+      return <any>fiber.promise;
     }
   }
 
@@ -620,14 +626,14 @@ export class Component<T extends Env, Props extends {}> {
 
   __render(fiber: Fiber<Props>): Promise<VNode> {
     const __owl__ = this.__owl__;
-    const promises: Promise<void>[] = [];
+    // const promises: Promise<void>[] = [];
     if (__owl__.observer) {
       __owl__.observer.allowMutations = false;
     }
     let vnode;
     try {
       vnode = __owl__.render!(this, {
-        promises,
+        // promises,
         handlers: __owl__.boundHandlers,
         fiber: fiber
       });
@@ -653,7 +659,12 @@ export class Component<T extends Env, Props extends {}> {
     if (__owl__.classObj) {
       vnode.data.class = Object.assign(vnode.data.class || {}, __owl__.classObj);
     }
-
+    const promises:Promise<VNode>[] = [];
+    let current = fiber.child;
+    while (current) {
+      promises.push(current.promise!);
+      current = current.sibling;
+    }
     return Promise.all(promises).then(() => vnode);
   }
 

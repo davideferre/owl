@@ -727,7 +727,7 @@ describe("lifecycle hooks", () => {
     ]);
   });
 
-  test("willPatch/patched hook with t-keepalive", async () => {
+  test.skip("willPatch/patched hook with t-keepalive", async () => {
     // we make sure here that willPatch/patched is only called if widget is in
     // dom, mounted
     const steps: string[] = [];
@@ -1150,7 +1150,7 @@ describe("composition", () => {
     expect(fixture.innerHTML).toBe("<div><div>0<button>Inc</button></div></div>");
   });
 
-  test("sub components with t-keepalive are not destroyed if no longer in dom", async () => {
+  test.skip("sub components with t-keepalive are not destroyed if no longer in dom", async () => {
     env.qweb.addTemplate(
       "ParentWidget",
       `<div><t t-if="state.ok"><Counter t-keepalive="1"/></t></div>`
@@ -1179,7 +1179,7 @@ describe("composition", () => {
     expect(fixture.innerHTML).toBe("<div><div>1<button>Inc</button></div></div>");
   });
 
-  test("sub components dom state with t-keepalive is preserved", async () => {
+  test.skip("sub components dom state with t-keepalive is preserved", async () => {
     env.qweb.addTemplate(
       "ParentWidget",
       `<div><t t-if="state.ok"><InputWidget t-keepalive="1"/></t></div>`
@@ -1207,7 +1207,7 @@ describe("composition", () => {
     expect(env.qweb.templates.ParentWidget.fn.toString()).toMatchSnapshot();
   });
 
-  test("sub widget with t-ref and t-keepalive", async () => {
+  test.skip("sub widget with t-ref and t-keepalive", async () => {
     class ChildWidget extends Widget {
       static template = xml`<span>Hello</span>`;
     }
@@ -2418,7 +2418,7 @@ describe("async rendering", () => {
     );
   });
 
-  test("creating two async components, scenario 2", async () => {
+  test.skip("creating two async components, scenario 2", async () => {
     let defA = makeDeferred();
     let defB = makeDeferred();
 

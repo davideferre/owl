@@ -39,7 +39,6 @@ exports[`animations t-transition combined with component 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -84,7 +83,6 @@ exports[`animations t-transition combined with t-component and t-if 1`] = `
             def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
             def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
         }
-        extra.promises.push(def3);
     }
     return vn1;
 }"

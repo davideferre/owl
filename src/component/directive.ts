@@ -510,7 +510,7 @@ QWeb.addDirective({
         `def${defID}.then(w${componentID}.__applyPatchQueue.bind(w${componentID}, fiber${componentID}));`
       );
     } else {
-      ctx.addLine(`extra.promises.push(def${defID});`);
+      // ctx.addLine(`extra.promises.push(def${defID});`);
     }
 
     if (node.hasAttribute("t-if") || node.hasAttribute("t-else") || node.hasAttribute("t-elif")) {

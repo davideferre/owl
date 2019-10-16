@@ -283,7 +283,6 @@ exports[`class and style attributes with t-component dynamic t-att-style is prop
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};w4.el.style=_5;let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -329,7 +328,6 @@ exports[`class and style attributes with t-component t-att-class is properly add
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
     w4.__owl__.classObj=_6;
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -388,7 +386,6 @@ exports[`class and style attributes with t-component t-att-class is properly add
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
     w4.__owl__.classObj=_6;
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -444,7 +441,6 @@ exports[`class and style attributes with t-component t-att-class is properly add
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
     w4.__owl__.classObj=_5;
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -546,7 +542,6 @@ exports[`composition sub components with some state rendered in a loop 1`] = `
             def6 = def6 || w7.__updateProps(props7, extra.fiber, undefined, undefined);
             def6 = def6.then(()=>{if (w7.__owl__.isDestroyed) {return};let pvnode=w7.__owl__.pvnode;c1[_5_index]=pvnode;});
         }
-        extra.promises.push(def6);
     }
     return vn1;
 }"
@@ -588,7 +583,6 @@ exports[`composition t-component with dynamic value 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -629,7 +623,6 @@ exports[`composition t-component with dynamic value 2 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -670,7 +663,6 @@ exports[`dynamic t-props basic use 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -713,7 +705,6 @@ exports[`lifecycle hooks willPatch/patched hook with t-keepalive 1`] = `
             def3 = def3 || w4.__updateProps(props4, w4.__owl__.isMounted ? extra.fiber : fiber4, undefined, undefined);
             def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;pvnode.data.hook.insert = vn => {vn.elm.parentNode.replaceChild(w4.el,vn.elm);vn.elm=w4.el;w4.__remount();};c1[_2_index]=pvnode;});
         }
-        extra.promises.push(def3);
     }
     return vn1;
 }"
@@ -755,7 +746,6 @@ exports[`other directives with t-component t-on with handler bound to argument 1
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -796,7 +786,6 @@ exports[`other directives with t-component t-on with handler bound to empty obje
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -837,7 +826,6 @@ exports[`other directives with t-component t-on with handler bound to empty obje
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -878,7 +866,6 @@ exports[`other directives with t-component t-on with handler bound to object 1`]
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -919,7 +906,6 @@ exports[`other directives with t-component t-on with prevent and self modifiers 
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -960,7 +946,6 @@ exports[`other directives with t-component t-on with self and prevent modifiers 
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -1001,7 +986,6 @@ exports[`other directives with t-component t-on with self modifier 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -1042,7 +1026,6 @@ exports[`other directives with t-component t-on with stop and/or prevent modifie
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -1102,7 +1085,6 @@ exports[`random stuff/miscellaneous snapshotting compiled code 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, undefined, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -1161,7 +1143,6 @@ exports[`random stuff/miscellaneous t-on with handler bound to dynamic argument 
             def6 = def6 || w7.__updateProps(props7, extra.fiber, undefined, undefined);
             def6 = def6.then(()=>{if (w7.__owl__.isDestroyed) {return};let pvnode=w7.__owl__.pvnode;c1[_5_index]=pvnode;});
         }
-        extra.promises.push(def6);
     }
     return vn1;
 }"
@@ -1402,7 +1383,6 @@ exports[`t-slot directive can define and call slots 1`] = `
         def3 = def3 || w4.__updateProps(props4, extra.fiber, {}, undefined);
         def3 = def3.then(()=>{if (w4.__owl__.isDestroyed) {return};let pvnode=w4.__owl__.pvnode;c1[_2_index]=pvnode;});
     }
-    extra.promises.push(def3);
     return vn1;
 }"
 `;
@@ -1645,7 +1625,6 @@ exports[`t-slot directive slots are rendered with proper context, part 2 2`] = `
             def8 = def8 || w9.__updateProps(props9, extra.fiber, Object.assign({}, scope), undefined);
             def8 = def8.then(()=>{if (w9.__owl__.isDestroyed) {return};let pvnode=w9.__owl__.pvnode;c6[_7_index]=pvnode;});
         }
-        extra.promises.push(def8);
     }
     return vn1;
 }"
@@ -1748,7 +1727,6 @@ exports[`t-slot directive slots are rendered with proper context, part 3 2`] = `
             def9 = def9 || w10.__updateProps(props10, extra.fiber, Object.assign({}, scope), {_7});
             def9 = def9.then(()=>{if (w10.__owl__.isDestroyed) {return};let pvnode=w10.__owl__.pvnode;c6[_8_index]=pvnode;});
         }
-        extra.promises.push(def9);
     }
     return vn1;
 }"
@@ -1805,7 +1783,6 @@ exports[`t-slot directive slots are rendered with proper context, part 4 1`] = `
         def4 = def4 || w5.__updateProps(props5, extra.fiber, {}, {_2});
         def4 = def4.then(()=>{if (w5.__owl__.isDestroyed) {return};let pvnode=w5.__owl__.pvnode;c1[_3_index]=pvnode;});
     }
-    extra.promises.push(def4);
     return vn1;
 }"
 `;
@@ -1876,7 +1853,6 @@ exports[`top level sub widgets basic use 1`] = `
         def2 = def2 || w3.__updateProps(props3, extra.fiber, undefined, undefined);
         def2 = def2.then(()=>{if (w3.__owl__.isDestroyed) {return};let pvnode=w3.__owl__.pvnode;utils.defineProxy(vn4, pvnode);});
     }
-    extra.promises.push(def2);
     return result;
 }"
 `;
@@ -1917,7 +1893,6 @@ exports[`top level sub widgets can select a sub widget  1`] = `
             def2 = def2 || w3.__updateProps(props3, extra.fiber, undefined, undefined);
             def2 = def2.then(()=>{if (w3.__owl__.isDestroyed) {return};let pvnode=w3.__owl__.pvnode;utils.defineProxy(vn4, pvnode);});
         }
-        extra.promises.push(def2);
     }
     if (!context['env'].flag) {
         //COMPONENT
@@ -1946,7 +1921,6 @@ exports[`top level sub widgets can select a sub widget  1`] = `
             def6 = def6 || w7.__updateProps(props7, extra.fiber, undefined, undefined);
             def6 = def6.then(()=>{if (w7.__owl__.isDestroyed) {return};let pvnode=w7.__owl__.pvnode;utils.defineProxy(vn8, pvnode);});
         }
-        extra.promises.push(def6);
     }
     return result;
 }"

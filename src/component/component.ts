@@ -40,16 +40,23 @@ export interface Env {
  * A rendering will cause the creation of a fiber for each impacted components.
  */
 export interface Fiber<Props> {
+  id: Number;
   force: boolean;
   rootFiber: Fiber<any> | null;
   isCancelled: boolean;
   scope: any;
   vars: any;
-  patchQueue: Fiber<any>[];
+  // patchQueue: Fiber<any>[];
   component: Component<any, any>;
   vnode: VNode | null;
   props: Props;
   promise: Promise<VNode> | null;
+
+  child: Fiber<any> | null;
+  lastChild: Fiber<any> | null;
+  sibling: Fiber<any> | null;
+  parent: Fiber<any> | null;
+  shouldPatch: boolean;
   //   handlers?: any;
   //   mountedHandlers?: any;
 }
@@ -90,7 +97,7 @@ interface Internal<T extends Env, Props> {
   classObj: { [key: string]: boolean } | null;
   refs: { [key: string]: Component<T, any> | HTMLElement | undefined } | null;
 }
-
+let nextID = 0;
 //------------------------------------------------------------------------------
 // Component
 //------------------------------------------------------------------------------
@@ -307,7 +314,7 @@ export class Component<T extends Env, Props extends {}> {
       }
       this.__patch(vnode);
     } else if (renderBeforeRemount) {
-      fiber.patchQueue.push(fiber);
+      // fiber.patchQueue.push(fiber);
       fiber.promise = this.__render(fiber);
       await fiber.promise;
       this.__applyPatchQueue(fiber);
@@ -345,7 +352,7 @@ export class Component<T extends Env, Props extends {}> {
       return;
     }
     const fiber = this.__createFiber(force, undefined, undefined, undefined);
-    fiber.patchQueue.push(fiber);
+    // fiber.patchQueue.push(fiber);
     fiber.promise = this.__render(fiber);
     await fiber.promise;
 
@@ -412,6 +419,7 @@ export class Component<T extends Env, Props extends {}> {
    */
   __createFiber(force, scope, vars, parent?: Fiber<any>): Fiber<Props> {
     const fiber: Fiber<Props> = {
+      id: nextID++,
       force,
       scope,
       vars,
@@ -419,12 +427,30 @@ export class Component<T extends Env, Props extends {}> {
       isCancelled: false,
       component: this,
       vnode: null,
-      patchQueue: parent ? parent.patchQueue : [],
+      // patchQueue: parent ? parent.patchQueue : [],
       props: this.props,
       promise: null,
+
+      child: null,
+      lastChild: null,
+      sibling: null,
+      parent: parent || null,
+      shouldPatch: true,
+
       // parent
       // resolve
     };
+
+    if (parent) {
+      if (!parent.child) {
+        parent.child = fiber;
+      }
+      if (parent.lastChild) {
+        parent.lastChild.sibling = fiber;
+      }
+      parent.lastChild = fiber;
+    }
+
     fiber.rootFiber = parent ? parent.rootFiber : fiber;
     this.__owl__.currentFiber = fiber;
     return fiber;
@@ -514,7 +540,7 @@ export class Component<T extends Env, Props extends {}> {
     if (shouldUpdate) {
       this.__owl__.currentFiber!.rootFiber!.isCancelled = true; // cancel in createFiber??
       const fiber = this.__createFiber(parentFiber.force, scope, vars, parentFiber);
-      fiber.patchQueue.push(fiber);
+      // fiber.patchQueue.push(fiber);
       const defaultProps = (<any>this.constructor).defaultProps;
       if (defaultProps) {
         nextProps = this.__applyDefaultProps(nextProps, defaultProps);
@@ -550,6 +576,7 @@ export class Component<T extends Env, Props extends {}> {
    */
   __prepare(parentFiber: Fiber<any>, scope: any, vars: any): Promise<VNode> {
     const fiber = this.__createFiber(parentFiber.force, scope, vars, parentFiber);
+    fiber.shouldPatch = false;
     fiber.promise = this.__prepareAndRender(fiber);
     return fiber.promise;
   }
@@ -679,7 +706,42 @@ export class Component<T extends Env, Props extends {}> {
    *   3) Call 'patched' on the component of each patch, in reverse order
    */
   __applyPatchQueue(fiber: Fiber<Props>) {
-    const patchQueue = fiber.patchQueue;
+
+    function getPatchQueue(fiber) {
+      const patchQueue:Fiber<any>[] = [];
+      let root = fiber;
+      let current = fiber;
+      while (true) {
+          if (current.shouldPatch) {
+            patchQueue.push(current);
+          } else {
+            if (current.sibling) {
+              current = current.sibling;
+            } else {
+              current = current.parent && current.parent.sibling;
+              if (!current) {
+                return patchQueue;
+              }
+            }
+            continue;
+          }
+          let child = current.child;
+          if (child) {
+              current = child;
+              continue;
+          }
+          while (!current.sibling) {
+              if (!current.parent || current.parent === root) {
+                  return patchQueue;
+              }
+              current = current.parent;
+          }
+          current = current.sibling;
+      }
+    }
+
+
+    const patchQueue = getPatchQueue(fiber);
     let component: Component<any, any> = this;
     try {
       const patchLen = patchQueue.length;

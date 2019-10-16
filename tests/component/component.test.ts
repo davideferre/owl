@@ -2849,7 +2849,7 @@ describe("async rendering", () => {
     expect(fixture.innerHTML).toBe("<div><p><span>2c</span></p></div>");
   });
 
-  test.only("concurrent renderings scenario 2", async () => {
+  test.skip("concurrent renderings scenario 2", async () => {
     // this test assets that a rendering initiated before another one, and that
     // ends after it, is re-mapped to that second rendering
     const defs = [makeDeferred(), makeDeferred()];
@@ -2897,14 +2897,14 @@ describe("async rendering", () => {
     defs[1].resolve(); // resolve rendering initiated in B
     await nextTick();
     expect(fixture.innerHTML).toBe("<div><span><span>2c</span></span></div>");
-    // expect(ComponentA.prototype.__applyPatchQueue).toBeCalledTimes(1);
-    // expect(ComponentB.prototype.__applyPatchQueue).toBeCalledTimes(0);
+    expect(ComponentA.prototype.__applyPatchQueue).toBeCalledTimes(1);
+    expect(ComponentB.prototype.__applyPatchQueue).toBeCalledTimes(0);
 
     defs[0].resolve(); // resolve rendering initiated in A
     await nextTick();
     expect(fixture.innerHTML).toBe("<div><span><span>2c</span></span></div>");
-    // expect(ComponentA.prototype.__applyPatchQueue).toBeCalledTimes(2);
-    // expect(ComponentB.prototype.__applyPatchQueue).toBeCalledTimes(0);
+    expect(ComponentA.prototype.__applyPatchQueue).toBeCalledTimes(2);
+    expect(ComponentB.prototype.__applyPatchQueue).toBeCalledTimes(0);
   });
 
   test("concurrent renderings scenario 3", async () => {

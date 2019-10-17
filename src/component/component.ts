@@ -717,42 +717,14 @@ export class Component<T extends Env, Props extends {}> {
    *   3) Call 'patched' on the component of each patch, in reverse order
    */
   __applyPatchQueue(fiber: Fiber<Props>) {
-
-    function getPatchQueue(fiber) {
-      const patchQueue:Fiber<any>[] = [];
-      let root = fiber;
-      let current = fiber;
-      while (true) {
-          if (current.shouldPatch) {
-            patchQueue.push(current);
-          } else {
-            if (current.sibling) {
-              current = current.sibling;
-            } else {
-              current = current.parent && current.parent.sibling;
-              if (!current) {
-                return patchQueue;
-              }
-            }
-            continue;
-          }
-          let child = current.child;
-          if (child) {
-              current = child;
-              continue;
-          }
-          while (!current.sibling) {
-              if (!current.parent || current.parent === root) {
-                  return patchQueue;
-              }
-              current = current.parent;
-          }
-          current = current.sibling;
+    const patchQueue:Fiber<any>[] = [];
+    const doWork:(Fiber) => Fiber<any> | null = function (f) {
+      if (f.shouldPatch) {
+        patchQueue.push(f);
       }
+      return f.child;
     }
-
-
-    const patchQueue = getPatchQueue(fiber);
+    this._walk(fiber, doWork);
     let component: Component<any, any> = this;
     try {
       const patchLen = patchQueue.length;
@@ -777,6 +749,32 @@ export class Component<T extends Env, Props extends {}> {
       }
     } catch (e) {
       errorHandler(e, component);
+    }
+  }
+
+  /**
+   * This function has been taken from
+   * https://medium.com/react-in-depth/the-how-and-why-on-reacts-usage-of-linked-list-in-fiber-67f1014d0eb7
+   */
+  _walk(fiber: Fiber<any>, doWork: (Fiber) => Fiber<any> | null) {
+    let root = fiber;
+    let current = fiber;
+    while (true) {
+      const child = doWork(current);
+      if (child) {
+        current = child;
+        continue;
+      }
+      if (current === root) {
+        return;
+      }
+      while (!current.sibling) {
+        if (!current.parent || current.parent === root) {
+          return;
+        }
+        current = current.parent;
+      }
+      current = current.sibling;
     }
   }
 }
